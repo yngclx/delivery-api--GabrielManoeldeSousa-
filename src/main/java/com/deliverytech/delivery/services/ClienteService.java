@@ -1,5 +1,4 @@
 package com.deliverytech.delivery.services;
-import com.deliverytech.delivery.dto.ClienteRequestDTO;
 import com.deliverytech.delivery.entity.Cliente;
 import com.deliverytech.delivery.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ public class ClienteService {
     /**
      * Cadastrar novo cliente
      */
-    public Cliente cadastrar(ClienteRequestDTO cliente) {
+    public Cliente cadastrar(Cliente cliente) {
         // Validar email único
     if (clienteRepository.existsByEmail(cliente.getEmail())) {
         throw new IllegalArgumentException(("Email já cadastrado: " + cliente.getEmail()));
@@ -103,7 +102,7 @@ public class ClienteService {
     /**
      * Validações de negócio
      */
-    private void validarDadosCliente(ClienteRequestDTO cliente) {
+    private void validarDadosCliente(Cliente cliente) {
         if (cliente.getNome() == null || cliente.getNome().trim().isEmpty()) {
             throw new IllegalArgumentException("Nome é obrigatório");
         }

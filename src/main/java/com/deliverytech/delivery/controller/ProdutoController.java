@@ -17,12 +17,12 @@ import java.math.BigDecimal;
 @CrossOrigin(origins = "*")
 public class ProdutoController {
     @Autowired
-    private ProdutoService ProdutoService;
+    private ProdutoService produtoService;
 
     @PostMapping
     public ResponseEntity<?> cadastrar(@Validated @RequestBody Produto produto) {
         try {
-            Produto produtoSalvo = ProdutoService.cadastrar(produto);
+            Produto produtoSalvo = produtoService.cadastrar(produto);
             return ResponseEntity.status(HttpStatus.CREATED).body(produtoSalvo);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("Erro: " + e.getMessage());
@@ -36,7 +36,7 @@ public class ProdutoController {
     @GetMapping
     public ResponseEntity<?> listarTodos() {
         try {
-            return ResponseEntity.ok(ProdutoService.listarTodos());
+            return ResponseEntity.ok(produtoService.listarTodos());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Erro interno do servidor");
@@ -46,7 +46,7 @@ public class ProdutoController {
     @GetMapping("/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
         try {
-            Produto produto = ProdutoService.buscarPorId(id);
+            Produto produto = produtoService.buscarPorId(id);
             if (produto != null) {
                 return ResponseEntity.ok(produto);
             } else {
@@ -61,7 +61,7 @@ public class ProdutoController {
     @PutMapping("/{id}")
     public ResponseEntity<?> atualizar(@PathVariable Long id, @Validated @RequestBody Produto produto) {
         try {
-            Produto atualizado = ProdutoService.atualizar(id, produto);
+            Produto atualizado = produtoService.atualizar(id, produto);
             return ResponseEntity.ok(atualizado);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("Erro: " + e.getMessage());
@@ -74,7 +74,7 @@ public class ProdutoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> excluir(@PathVariable Long id) {
         try {
-            ProdutoService.excluir(id);
+            produtoService.excluir(id);
             return ResponseEntity.noContent().build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("Erro: " + e.getMessage());
@@ -87,7 +87,7 @@ public class ProdutoController {
     @PutMapping("/{id}/inativar")
     public ResponseEntity<?> inativar(@PathVariable Long id) {
         try {
-            Produto produtoInativado = ProdutoService.inativar(id);
+            Produto produtoInativado = produtoService.inativar(id);
             return ResponseEntity.ok(produtoInativado);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("Erro: " + e.getMessage());
@@ -101,7 +101,7 @@ public class ProdutoController {
     @GetMapping("/restaurante/{restauranteId}")
     public ResponseEntity<?> buscarPorRestaurante(@PathVariable Long restauranteId) {
         try {
-            return ResponseEntity.ok(ProdutoService.buscarPorRestaurante(restauranteId));
+            return ResponseEntity.ok(produtoService.buscarPorRestaurante(restauranteId));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Erro interno do servidor");
@@ -112,7 +112,7 @@ public class ProdutoController {
     @GetMapping("/disponiveis")
     public ResponseEntity<?> listarDisponiveis() {
         try {
-            return ResponseEntity.ok(ProdutoService.buscarDisponiveis());
+            return ResponseEntity.ok(produtoService.buscarDisponiveis());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Erro interno do servidor");
@@ -122,7 +122,7 @@ public class ProdutoController {
     @GetMapping("/categoria/{categoria}")
     public ResponseEntity<?> buscarPorCategoria(@PathVariable String categoria) {
         try {
-            return ResponseEntity.ok(ProdutoService.buscarPorCategoria(categoria));
+            return ResponseEntity.ok(produtoService.buscarPorCategoria(categoria));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Erro interno do servidor");
@@ -132,7 +132,7 @@ public class ProdutoController {
     @GetMapping("/preco/{preco}")
     public ResponseEntity<?> buscarPorPreco(@PathVariable BigDecimal preco) {
         try {
-            return ResponseEntity.ok(ProdutoService.buscarPorFaixaDePreco(preco));
+            return ResponseEntity.ok(produtoService.buscarPorFaixaDePreco(preco));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Erro interno do servidor");
